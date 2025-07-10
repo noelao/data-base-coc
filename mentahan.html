@@ -30,9 +30,68 @@
             min-height: 100vh;
             width: 100%;
             position: relative;
-            .opsi {
-                aspect-ratio: 14/9;
+        }
+        .opsi {
+            aspect-ratio: 14/9;
+            width: 100%;
+            position: relative;
+            .townhoal {
+                position: absolute;
+                top: 50%;
+                transform: translateY(-50%);
+                
                 width: 100%;
+                height: 8rem;
+                
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                padding: 1rem 0;
+                .pilihan {
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translateX(-50%) translateY(-50%);
+
+                    display: none;
+                    gap: 12px;
+                    width: 100%;
+                    overflow-x: scroll;
+
+                    padding: 0 calc(50% - 3rem);
+
+
+                    
+                    .th {
+                        height: 6rem;
+                        aspect-ratio: 1;
+                        background-color: var(--gelap);
+                        position: relative;
+                        .angka {
+                            position: absolute;
+                            top: 0px;
+                            left: 50%;
+                            transform: translateX(-50%);
+                            color: var(--terang);
+                        }
+                    }
+                }
+                .terpilih {
+                    height: 6rem;
+                    aspect-ratio: 1;
+                    background-color: var(--gelap);
+                    position: relative;
+                    .angka {
+                        position: absolute;
+                        top: 0px;
+                        left: 50%;
+                        transform: translateX(-50%);
+                        color: var(--terang);
+                    }
+                }
+                .muncul {
+                    display: flex;
+                }
             }
         }
         .basean {
@@ -87,7 +146,45 @@
         <h1>Coc data-base</h1>
 
         <div class="opsi">
-            <h1>th: 5</h1>
+            <div class="townhoal">
+                <div class="terpilih">
+                    <h3 class="angka">
+                        th 3
+                    </h3>
+                </div>
+                <div class="pilihan">
+                    <div class="th">
+                        <div class="angka">
+                            <h3>th 3</h3>
+                        </div>
+                    </div>
+                    <div class="th">
+                        <div class="angka">
+                            <h3>th 4</h3>
+                        </div>
+                    </div>
+                    <div class="th">
+                        <div class="angka">
+                            <h3>th 5</h3>
+                        </div>
+                    </div>
+                    <div class="th">
+                        <div class="angka">
+                            <h3>th 6</h3>
+                        </div>
+                    </div>
+                    <div class="th">
+                        <div class="angka">
+                            <h3>th 7</h3>
+                        </div>
+                    </div>
+                    <div class="th">
+                        <div class="angka">
+                            <h3>th 8</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
         </div>
 
@@ -109,9 +206,10 @@
     <div class="footer"></div>
 
     <script>
+        const wadah = document.querySelector(".basean");
+
         loadData();
         async function loadData() {
-            const wadah = document.querySelector(".basean");
             try {
                 const response = await fetch("dataBase.json");
 
@@ -148,6 +246,68 @@
             }
         }
         
+    </script>
+    <script>
+        const terpilih = document.querySelector(".terpilih");
+
+        const pilihan = document.querySelector(".pilihan");
+        const pilihanPilih = pilihan.querySelectorAll(".th");
+
+        terpilih.addEventListener("click", function(){
+            pilihan.classList.toggle("muncul")
+        });
+        
+        pilihanPilih.forEach((ini, i) => {
+            ini.addEventListener("click", function(){
+                terpilih.querySelector(".angka").innerHTML = `th ${parseInt(i) + 3}`;
+                pilihan.classList.toggle("muncul");
+                ambilBaseTh(parseInt(i) + 3);
+            });
+        })
+
+    </script>
+    <script>
+        async function ambilBaseTh(angka) {
+            let data = []
+            try {
+                const response = await fetch(`base/baseth${5}.json`);
+                if(!response.ok){
+                    throw new Error("tidak ada file");
+                }
+
+                data = await response.json();
+                console.log(data);
+                console.log(angka);
+
+            } catch(err){
+                console.log(err);
+            } finally {
+                const isi = data.map((ini) => {
+                    return `
+                    <div class="base">
+                        <img src="image/${ini.image}" alt="">
+                        <div class="author">
+                            <small>author</small>
+                            <h3>${ini.author.name}</h3>
+                        </div>
+                        <div class="copy">
+                            <a href="${ini.link}" target="_blank">
+                                <h3>copy</h3>
+                            </a>
+                        </div>
+                    </div>
+                    `
+                }).join("");
+
+                const sebelumIsi = `
+                    <h3>
+                        tersedia ${data.length} base
+                    </h3>
+                `;
+
+                wadah.innerHTML = sebelumIsi+isi;
+            }
+        }
     </script>
 
 </body>
