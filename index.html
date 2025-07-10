@@ -43,6 +43,54 @@
                 }
             }
         }
+        
+        .basean {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+
+            gap: 12px;
+            
+            .base {
+                width: 100%;
+                aspect-ratio: 14/9;
+                background-color: var(--gelap);
+                position: relative;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                img {
+                    width: 100%;
+                    height: auto;
+                }
+                .copy {
+                    position: absolute;
+                    bottom: 12px;
+                    right: 12px;
+
+                    background-color: var(--terang);
+                    padding: 0 12px;
+                }
+                .author {
+                    position: absolute;
+                    top: 12px;
+                    left: 12px;
+                    display: flex;
+                    flex-direction: column;
+                    line-height: 1;
+                    color: var(--terang);
+                }
+            }
+        }
+
+    </style>
+
+    
+    <style>
+        .footer {
+            height: 98vh;
+            width: 100%;
+        }
     </style>
 </head>
 <body>
@@ -53,9 +101,7 @@
         </div>
     </div>
 
-
-    
-
+    <div class="footer"></div>
 
 <script>
     landing();
@@ -116,9 +162,45 @@
         } catch (err){
             console.log(err);
         } finally {
-            const landing = landing1.map((ini) => {
-                
-            })
+            loadData()
+        }
+    }
+
+    async function loadData() {
+        const wadah = document.querySelector(".basean");
+        try {
+            const response = await fetch("dataBase.json");
+
+            const data = await response.json();
+            console.log(data);
+
+            const isi = data.map((ini) => {
+                return `
+                <div class="base">
+                    <img src="image/${ini.image}" alt="">
+                    <div class="author">
+                        <small>author</small>
+                        <h3>${ini.author.name}</h3>
+                    </div>
+                    <div class="copy">
+                        <a href="${ini.link}" target="_blank">
+                            <h3>copy</h3>
+                        </a>
+                    </div>
+                </div>
+                `
+            }).join("");
+
+            const sebelumIsi = `
+                <h3>
+                    tersedia ${data.length} base
+                </h3>
+            `;
+
+            wadah.innerHTML = sebelumIsi+isi;
+
+        } catch(err){
+
         }
     }
 
