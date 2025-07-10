@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>data-Base</title>
+    
+    <style>
+        :root {
+            --gelap: #000;
+            --terang: #fafafa;
+        }
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background-color: var(--terang);
+            color: var(--gelap);
+            font-family: poppins;
+            font-size: .9rem;
+        }
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .container {
+            min-height: 100vh;
+            width: 100%;
+            position: relative;
+            .opsi {
+                aspect-ratio: 14/9;
+                width: 100%;
+            }
+        }
+        .basean {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+
+            gap: 12px;
+            
+            .base {
+                width: 100%;
+                aspect-ratio: 14/9;
+                background-color: var(--gelap);
+                position: relative;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                img {
+                    width: 100%;
+                    height: auto;
+                }
+                .copy {
+                    position: absolute;
+                    bottom: 12px;
+                    right: 12px;
+
+                    background-color: var(--terang);
+                    padding: 0 12px;
+                }
+                .author {
+                    position: absolute;
+                    top: 12px;
+                    left: 12px;
+                    display: flex;
+                    flex-direction: column;
+                    line-height: 1;
+                    color: var(--terang);
+                }
+            }
+        }
+    </style>
+    <style>
+        .footer {
+            height: 98vh;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Coc data-base</h1>
+
+        <div class="opsi">
+            <h1>th: 5</h1>
+
+        </div>
+
+        <div class="basean">
+            <div class="base">
+                <img src="" alt="">
+                <div class="author">
+                    <small>author</small>
+                    <h3>${ini.author.name}</h3>
+                </div>
+                <div class="copy">
+                    <a href="" target="_blank">
+                        <h3>copy</h3>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer"></div>
+
+    <script>
+        loadData();
+        async function loadData() {
+            const wadah = document.querySelector(".basean");
+            try {
+                const response = await fetch("dataBase.json");
+
+                const data = await response.json();
+                console.log(data);
+
+                const isi = data.map((ini) => {
+                    return `
+                    <div class="base">
+                        <img src="image/${ini.image}" alt="">
+                        <div class="author">
+                            <small>author</small>
+                            <h3>${ini.author.name}</h3>
+                        </div>
+                        <div class="copy">
+                            <a href="${ini.link}" target="_blank">
+                                <h3>copy</h3>
+                            </a>
+                        </div>
+                    </div>
+                    `
+                }).join("");
+
+                const sebelumIsi = `
+                    <h3>
+                        tersedia ${data.length} base
+                    </h3>
+                `;
+
+                wadah.innerHTML = sebelumIsi+isi;
+
+            } catch(err){
+
+            }
+        }
+    </script>
+
+</body>
+</html>

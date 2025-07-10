@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        :root {
+            --gelap: #000;
+            --terang: #fafafa;
+        }
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background-color: var(--terang);
+        }
+
+        .container {
+            min-height: 100vh;
+            width: 100%;
+            position: relative;
+            .awalLoading {
+                height: 100vh;
+                width: 100%;
+                position: absolute;
+                top: 0;
+                left: 0;
+                opacity: 1;
+                transition: opacity 1s cubic-bezier(0.785, 0.135, 0.15, 0.86);
+                background-color: #000;
+                .garisLoading {
+                    position: absolute;
+                    top: 50%;
+                    left: 0;
+                    transform: translateY(-50%);
+                    height: 4px;
+                    width: 0;
+                    background-color: #fff;
+                    transition: width 1s cubic-bezier(0.785, 0.135, 0.15, 0.86);
+                }
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="awalLoading">
+            <div class="garisLoading"></div>
+        </div>
+    </div>
+
+
+    
+
+
+<script>
+    landing();
+    
+    async function landing() {
+        let landing1 = "";
+        try {
+            const response = await fetch('landing.json');
+
+            const progressBar = document.querySelector(".garisLoading");
+            const awalLoading = progressBar.parentElement;
+
+            if (!response.headers.has('content-length')) {
+                throw new Error('Server tidak mengirimkan Content-Length, progres tidak bisa dihitung.');
+            }
+
+            const totalSize = Number(response.headers.get('content-length'));
+            let loadedSize = 0;
+
+            // Dapatkan reader untuk membaca stream data
+            const reader = response.body.getReader();
+            const chunks = [];
+
+            while (true) {
+                const { done, value } = await reader.read();
+
+                if (done) {
+                    awalLoading.style.opacity = 0;
+                    setTimeout(() => {
+                        awalLoading.style.display = "none";
+                        console.log("loading dihilangkan");
+                    }, 1000);
+                    break;
+                }
+
+                chunks.push(value);
+                loadedSize += value.length;
+
+                // Hitung dan update progress
+                const percentage = Math.round((loadedSize / totalSize) * 100);
+                progressBar.style.width = percentage+"%";
+            }
+            
+            // Gabungkan semua potongan data (chunks) menjadi satu
+            const allChunks = new Uint8Array(loadedSize);
+            let position = 0;
+            for(const chunk of chunks) {
+                allChunks.set(chunk, position);
+                position += chunk.length;
+            }
+
+            // Ubah data menjadi teks, lalu parse sebagai JSON
+            const jsonString = new TextDecoder('utf-8').decode(allChunks);
+            landing1 = JSON.parse(jsonString);
+
+            console.log(landing1, "dengan loading");
+
+        } catch (err){
+            console.log(err);
+        } finally {
+            const landing = landing1.map((ini) => {
+                
+            })
+        }
+    }
+
+</script>
+</body>
+</html>
