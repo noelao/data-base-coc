@@ -16,6 +16,13 @@
         }
         body {
             background-color: var(--terang);
+            color: var(--gelap);
+            font-family: poppins;
+            font-size: .9rem;
+        }
+        a {
+            text-decoration: none;
+            color: inherit;
         }
 
         .container {
@@ -31,6 +38,7 @@
                 opacity: 1;
                 transition: opacity 1s cubic-bezier(0.785, 0.135, 0.15, 0.86);
                 background-color: #000;
+                z-index: 12;
                 .garisLoading {
                     position: absolute;
                     top: 50%;
@@ -42,6 +50,10 @@
                     transition: width 1s cubic-bezier(0.785, 0.135, 0.15, 0.86);
                 }
             }
+        }
+        .opsi {
+            aspect-ratio: 14/9;
+            width: 100%;
         }
         
         .basean {
@@ -99,6 +111,13 @@
         <div class="awalLoading">
             <div class="garisLoading"></div>
         </div>
+        
+        <h1>Coc data-base</h1>
+        <div class="opsi">
+            <h1>th: 5</h1>
+
+        </div>
+        <div class="basean"></div>
     </div>
 
     <div class="footer"></div>
@@ -159,10 +178,12 @@
 
             console.log(landing1, "dengan loading");
 
+
         } catch (err){
             console.log(err);
         } finally {
-            loadData()
+            console.log("lanjut");
+            await loadData();
         }
     }
 
