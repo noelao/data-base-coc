@@ -10,12 +10,13 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 // Serve folder image secara static agar bisa diakses via URL
 app.use('/image', express.static(path.join(__dirname, 'image')));
+app.use('/iklan', express.static(path.join(__dirname, 'iklan')));
 
 // Set EJS sebagai view engine
 app.set('view engine', 'ejs');
 
 // Pastikan folder penyimpanan ada saat startup
-const dirs = [path.join(__dirname, 'image'), path.join(__dirname, 'base')];
+const dirs = [path.join(__dirname, 'image'), path.join(__dirname, 'base'), path.join(__dirname, 'iklan')];
 dirs.forEach(dir => {
   if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
 });

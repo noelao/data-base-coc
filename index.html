@@ -1,383 +1,541 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Clash of Clans - Koleksi Base</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
     <style>
-        :root {
-            --gelap: #1a1a1a;
-            --terang: #f0f2f5;
-            --kartu: #ffffff;
-            --primer: #007bff;
-            --bayangan: rgba(0, 0, 0, 0.1);
-        }
-        * {
-            padding: 0;
-            margin: 0;
-            box-sizing: border-box;
-        }
-        body {
-            background-color: var(--terang);
-            color: var(--gelap);
-            font-family: 'Poppins', sans-serif;
-            font-size: 1rem;
-            line-height: 1.6;
-        }
-        a {
-            text-decoration: none;
-            color: inherit;
-        }
+      :root {
+        --gelap: #1a1a1a;
+        --terang: #f0f2f5;
+        --kartu: #ffffff;
+        --primer: #007bff;
+        --bayangan: rgba(0, 0, 0, 0.1);
+      }
+      body.dark-mode {
+        --gelap: #e4e6eb;
+        --terang: #18191a;
+        --kartu: #242526;
+        --bayangan: rgba(0, 0, 0, 0.5);
+      }
+      * {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+      }
+      body {
+        background-color: var(--terang);
+        color: var(--gelap);
+        font-family: "Poppins", sans-serif;
+        font-size: 1rem;
+        line-height: 1.6;
+      }
+      a {
+        text-decoration: none;
+        color: inherit;
+      }
 
-        .container {
-            width: 100%;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            position: relative;
-        }
+      .navbar {
+        background-color: var(--kartu);
+        box-shadow: 0 2px 4px var(--bayangan);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        margin-bottom: 20px;
+      }
+      .nav-container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 15px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .nav-brand {
+        font-size: 1.2rem;
+        font-weight: 700;
+        color: var(--primer);
+      }
+      .nav-menu {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+      }
+      .nav-link {
+        font-weight: 600;
+        color: var(--gelap);
+        transition: color 0.3s;
+      }
+      .nav-link:hover {
+        color: var(--primer);
+      }
+      .theme-toggle {
+        background: none;
+        border: none;
+        cursor: pointer;
+        font-size: 1.2rem;
+        color: var(--gelap);
+        padding: 5px;
+        border-radius: 50%;
+        transition: background-color 0.3s;
+      }
+      .theme-toggle:hover {
+        background-color: var(--terang);
+      }
 
-        .awalLoading {
-            height: 100vh;
-            width: 100%;
-            position: fixed;
-            top: 0;
-            left: 0;
-            opacity: 1;
-            transition: opacity 0.5s ease;
-            background-color: #000;
-            z-index: 200;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .garisLoading {
-            position: absolute;
-            top: 50%;
-            left: 0;
-            transform: translateY(-50%);
-            height: 4px;
-            width: 0;
-            background-color: var(--primer);
-        }
-        
-        h1.judul-utama {
-            text-align: center;
-            margin-bottom: 24px;
-            font-size: 2.2rem;
-            font-weight: 700;
-        }
+      .container {
+        width: 100%;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 5px;
+        position: relative;
+      }
 
-        .opsi {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            background-color: var(--kartu);
-            padding: 16px;
-            border-radius: 8px;
-            margin-bottom: 24px;
-            box-shadow: 0 2px 4px var(--bayangan);
-        }
-        .opsi label {
-            font-size: 0.9rem;
-            font-weight: 600;
-            color: #495057;
-        }
-        .opsi select {
-            width: 100%;
-            padding: 10px;
-            font-family: 'Poppins', sans-serif;
-            font-size: 1rem;
-            border: 1px solid #ced4da;
-            border-radius: 4px;
-            background-color: #fff;
-        }
-        
-        .basean {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            gap: 25px;
-            min-height: 500px;
-        }
-        
-        .base {
-            width: 100%;
-            background-color: var(--kartu);
-            border-radius: 12px;
-            box-shadow: 0 4px 8px var(--bayangan);
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .base .gambar-container {
-            cursor: zoom-in;
-            position: relative;
-            aspect-ratio: 16 / 9; /* Placeholder ratio */
-            background-color: #e9ecef; /* Placeholder color */
-        }
+      .awalLoading {
+        height: 100vh;
+        width: 100%;
+        position: fixed;
+        top: 0;
+        left: 0;
+        opacity: 1;
+        transition: opacity 0.5s ease;
+        background-color: #000;
+        z-index: 200;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .garisLoading {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        transform: translateY(-50%);
+        height: 4px;
+        width: 0;
+        background-color: var(--primer);
+      }
 
-        .base img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover; /* Ensure image covers the container */
-            display: block;
-        }
+      h1.judul-utama {
+        text-align: center;
+        margin-bottom: 15px;
+        font-size: 2.2rem;
+        font-weight: 700;
+      }
 
-        .base-types {
-            padding: 12px 16px 0;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
-        }
-        .base-type-tag {
-            display: inline-block;
-            padding: 4px 12px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            border-radius: 16px;
-            background-color: #e9ecef;
-            color: #495057;
-            text-transform: capitalize;
-        }
-        .base-type-tag.default {
-            background-color: #f8d7da;
-            color: #721c24;
-        }
+      .opsi {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        background-color: var(--kartu);
+        padding: 10px;
+        border-radius: 8px;
+        margin-bottom: 15px;
+        box-shadow: 0 2px 4px var(--bayangan);
+      }
+      .opsi label {
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: #495057;
+      }
+      .opsi select {
+        width: 100%;
+        padding: 10px;
+        font-family: "Poppins", sans-serif;
+        font-size: 1rem;
+        border: 1px solid #ced4da;
+        border-radius: 4px;
+        background-color: #fff;
+      }
 
-        .info-base {
-            padding: 16px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+      .basean {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        min-height: 500px;
+      }
 
-        .author {
-            line-height: 1.2;
-        }
-        .author small {
-            font-size: 0.8rem;
-            color: #6c757d;
-        }
-        .author h3 {
-            font-size: 1.1rem;
-            font-weight: 600;
-        }
+      .base {
+        width: 100%;
+        background-color: var(--kartu);
+        border-radius: 12px;
+        box-shadow: 0 4px 8px var(--bayangan);
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+      }
 
-        .copy a {
-            background-color: var(--primer);
-            color: #fff;
-            padding: 10px 20px;
-            border-radius: 25px;
-            font-weight: 600;
-            font-size: 0.9rem;
-            transition: background-color 0.3s ease;
-        }
-        .copy a:hover {
-            background-color: #0056b3;
-        }
+      .base .gambar-container {
+        cursor: zoom-in;
+        position: relative;
+        aspect-ratio: 16 / 9; /* Placeholder ratio */
+        background-color: #e9ecef; /* Placeholder color */
+      }
 
-        .pagination {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-top: 30px;
-            gap: 10px;
-        }
-        .pagination button {
-            background-color: var(--primer);
-            color: #fff;
-            border: none;
-            padding: 10px 15px;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-        .pagination button:hover {
-            background-color: #0056b3;
-        }
-        .pagination button:disabled {
-            background-color: #ced4da;
-            cursor: not-allowed;
-        }
-        .pagination span {
-            font-weight: 600;
-            color: var(--gelap);
-        }
+      .base img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover; /* Ensure image covers the container */
+        display: block;
+      }
 
-        .footer {
-            text-align: center;
-            padding: 40px 20px;
-            margin-top: 40px;
-            color: #6c757d;
-        }
+      .base-types {
+        padding: 8px 12px 0;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+      .base-type-tag {
+        display: inline-block;
+        padding: 4px 12px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        border-radius: 16px;
+        background-color: #e9ecef;
+        color: #495057;
+        text-transform: capitalize;
+      }
+      .base-type-tag.default {
+        background-color: #f8d7da;
+        color: #721c24;
+      }
 
-        .zoom-modal {
-            display: none;
-            position: fixed;
-            z-index: 150;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0,0,0,0.9);
-            justify-content: center;
-            align-items: center;
-        }
+      .info-base {
+        padding: 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
 
-        .zoom-modal-content {
-            margin: auto;
-            display: block;
-            max-width: 90%;
-            max-height: 90%;
-        }
+      .author {
+        line-height: 1.2;
+      }
+      .author small {
+        font-size: 0.8rem;
+        color: #6c757d;
+      }
+      .author h3 {
+        font-size: 1.1rem;
+        font-weight: 600;
+      }
 
-        .close-zoom {
-            position: absolute;
-            top: 15px;
-            right: 35px;
-            color: #f1f1f1;
-            font-size: 40px;
-            font-weight: bold;
-            transition: 0.3s;
-            cursor: pointer;
-        }
-        .close-zoom:hover,
-        .close-zoom:focus {
-            color: #bbb;
-        }
+      .copy a {
+        background-color: var(--primer);
+        color: #fff;
+        padding: 10px 20px;
+        border-radius: 25px;
+        font-weight: 600;
+        font-size: 0.9rem;
+        transition: background-color 0.3s ease;
+      }
+      .copy a:hover {
+        background-color: #0056b3;
+      }
 
+      .pagination {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 15px;
+        gap: 8px;
+      }
+      .pagination button {
+        background-color: var(--primer);
+        color: #fff;
+        border: none;
+        padding: 10px 15px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+      .pagination button:hover {
+        background-color: #0056b3;
+      }
+      .pagination button:disabled {
+        background-color: #ced4da;
+        cursor: not-allowed;
+      }
+      .pagination span {
+        font-weight: 600;
+        color: var(--gelap);
+      }
+
+      .footer {
+        text-align: center;
+        padding: 20px 10px;
+        margin-top: 20px;
+        color: #6c757d;
+      }
+
+      .zoom-modal {
+        display: none;
+        position: fixed;
+        z-index: 150;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.9);
+        justify-content: center;
+        align-items: center;
+      }
+
+      .zoom-modal-content {
+        margin: auto;
+        display: block;
+        max-width: 90%;
+        max-height: 90%;
+      }
+
+      .close-zoom {
+        position: absolute;
+        top: 15px;
+        right: 35px;
+        color: #f1f1f1;
+        font-size: 40px;
+        font-weight: bold;
+        transition: 0.3s;
+        cursor: pointer;
+      }
+      .close-zoom:hover,
+      .close-zoom:focus {
+        color: #bbb;
+      }
+
+      /* Style Khusus Iklan */
+      .iklan-special {
+        position: relative;
+        border: none;
+        background: transparent !important;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        overflow: hidden;
+      }
+      .iklan-special img {
+        width: 100%;
+        height: auto;
+        display: block;
+        object-fit: cover;
+      }
+      .iklan-overlay {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          to top,
+          rgba(0, 0, 0, 0.9) 0%,
+          rgba(0, 0, 0, 0.2) 60%,
+          transparent 100%
+        );
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        padding: 20px;
+      }
+      .iklan-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+      }
+      .iklan-text small {
+        color: #f0f0f0;
+        font-size: 0.9rem;
+        opacity: 0.9;
+        display: block;
+      }
+      .iklan-text h3 {
+        color: #fff;
+        font-size: 1.5rem;
+        font-weight: 700;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        margin: 0;
+      }
+      .iklan-btn {
+        background-color: #ff0000;
+        color: #fff;
+        padding: 10px 20px;
+        border-radius: 50px;
+        font-weight: 700;
+        text-decoration: none;
+        box-shadow: 0 4px 10px rgba(255, 0, 0, 0.4);
+        transition:
+          transform 0.2s,
+          background-color 0.2s;
+      }
+      .iklan-btn:hover {
+        background-color: #cc0000;
+        transform: scale(1.05);
+      }
     </style>
-</head>
-<body>
-
+  </head>
+  <body>
     <div class="awalLoading">
-        <div class="garisLoading"></div>
+      <div class="garisLoading"></div>
     </div>
 
+    <nav class="navbar">
+      <div class="nav-container">
+        <a href="#" class="nav-brand">Base Finder</a>
+        <div class="nav-menu">
+          <a href="#" class="nav-link">Upload Base</a>
+          <button
+            id="theme-toggle"
+            class="theme-toggle"
+            aria-label="Toggle Dark Mode"
+          >
+            🌙
+          </button>
+        </div>
+      </div>
+    </nav>
+
     <div class="container">
-        <h1 class="judul-utama">Koleksi Base COC</h1>
-        <div class="opsi">
-            <label for="th-level-select">Pilih Level Town Hall:</label>
-            <select id="th-level-select"></select>
-        </div>
-        <div class="opsi">
-            <label for="base-type-select">Pilih Tipe Base:</label>
-            <select id="base-type-select">
-                <option value="all">Semua Tipe</option>
-            </select>
-        </div>
-        <div class="basean">
-            <!-- Konten akan dimuat di sini oleh JavaScript -->
-        </div>
-        <div id="pagination-controls" class="pagination"></div>
+      <h1 class="judul-utama">Koleksi Base COC</h1>
+      <div class="opsi">
+        <label for="th-level-select">Pilih Level Town Hall:</label>
+        <select id="th-level-select"></select>
+      </div>
+      <div class="opsi">
+        <label for="base-type-select">Pilih Tipe Base:</label>
+        <select id="base-type-select">
+          <option value="all">Semua Tipe</option>
+        </select>
+      </div>
+      <div class="basean">
+        <!-- Konten akan dimuat di sini oleh JavaScript -->
+      </div>
+      <div id="pagination-controls" class="pagination"></div>
     </div>
 
     <footer class="footer">
-        <p>&copy; 2026 Base Finder. Hak Cipta Dilindungi.</p>
+      <p>&copy; 2026 Base Finder. Hak Cipta Dilindungi.</p>
     </footer>
 
     <div id="zoomModal" class="zoom-modal">
-        <span class="close-zoom">&times;</span>
-        <img class="zoom-modal-content" id="zoomedImg">
+      <span class="close-zoom">&times;</span>
+      <img class="zoom-modal-content" id="zoomedImg" />
     </div>
 
-<script>
-    let allBases = [];
-    let currentPage = 1;
-    const basesPerPage = 10;
-    const baseTypesFromEjs = ["looting base", "war base", "cwl base", "troll base", "circle base", "asymetris base", "cool base", "hybrid base"];
-    
-    document.addEventListener('DOMContentLoaded', () => {
+    <script>
+      let allBases = [];
+      let currentPage = 1;
+      const basesPerPage = 10;
+      const baseTypesFromEjs = [
+        "looting base",
+        "war base",
+        "cwl base",
+        "troll base",
+        "circle base",
+        "asymetris base",
+        "cool base",
+        "hybrid base",
+      ];
+
+      document.addEventListener("DOMContentLoaded", () => {
         setupZoom();
+        setupTheme();
         setupThSelector();
         setupBaseTypeSelector();
         landing();
-    });
-    
-    async function landing() {
+      });
+
+      async function landing() {
         const awalLoading = document.querySelector(".awalLoading");
         try {
-            await loadData(17); // Muat default TH 17
-        } catch (err){
-            console.error("Gagal memuat data awal:", err);
+          await loadData(17); // Muat default TH 17
+        } catch (err) {
+          console.error("Gagal memuat data awal:", err);
         } finally {
-            if (awalLoading) {
-                awalLoading.style.opacity = 0;
-                setTimeout(() => {
-                    awalLoading.style.display = "none";
-                }, 500);
-            }
+          if (awalLoading) {
+            awalLoading.style.opacity = 0;
+            setTimeout(() => {
+              awalLoading.style.display = "none";
+            }, 500);
+          }
         }
-    }
+      }
 
-    async function loadData(thLevel) {
+      async function loadData(thLevel) {
         const wadah = document.querySelector(".basean");
-        const paginationControls = document.getElementById('pagination-controls');
+        const paginationControls = document.getElementById(
+          "pagination-controls",
+        );
         if (!wadah) return;
 
         wadah.innerHTML = `<p style="text-align: center;">Memuat base untuk TH ${thLevel}...</p>`;
-        paginationControls.innerHTML = '';
-
+        paginationControls.innerHTML = "";
 
         try {
-            const response = await fetch(`base/baseth${thLevel}.json`);
-            if (!response.ok) {
-                throw new Error(`Data TH ${thLevel} tidak tersedia`);
-            }
-            allBases = await response.json();
-            allBases.sort((a, b) => b.id - a.id); // Urutkan dari ID terbesar (terbaru)
-            
-            currentPage = 1;
-            displayBases(document.getElementById('base-type-select').value, currentPage);
+          const response = await fetch(`base/baseth${thLevel}.json`);
+          if (!response.ok) {
+            throw new Error(`Data TH ${thLevel} tidak tersedia`);
+          }
+          allBases = await response.json();
+          allBases.sort((a, b) => b.id - a.id); // Urutkan dari ID terbesar (terbaru)
 
-        } catch(err) {
-            console.error("Gagal memuat data base:", err);
-            wadah.innerHTML = `<p style="color: #dc3545; text-align: center; font-weight: 600;">${err.message}</p>`;
+          currentPage = 1;
+          displayBases(
+            document.getElementById("base-type-select").value,
+            currentPage,
+          );
+        } catch (err) {
+          console.error("Gagal memuat data base:", err);
+          wadah.innerHTML = `<p style="color: #dc3545; text-align: center; font-weight: 600;">${err.message}</p>`;
         }
-    }
+      }
 
-    function displayBases(baseType, page = 1) {
+      function displayBases(baseType, page = 1) {
         const wadah = document.querySelector(".basean");
-        const thLevel = document.getElementById('th-level-select').value;
+        const thLevel = document.getElementById("th-level-select").value;
         currentPage = page;
-        
-        const filteredBases = baseType === 'all' 
-            ? allBases 
-            : allBases.filter(base => base.base_type && base.base_type.includes(baseType));
+
+        const filteredBases =
+          baseType === "all"
+            ? allBases
+            : allBases.filter(
+                (base) => base.base_type && base.base_type.includes(baseType),
+              );
 
         if (filteredBases.length === 0) {
-            if (baseType === 'all') {
-                 wadah.innerHTML = `<p style="text-align: center;">Tidak ada base yang ditemukan untuk Town Hall ${thLevel}.</p>`;
-            } else {
-                 wadah.innerHTML = `<p style="text-align: center;">Base dengan tipe "${baseType}" untuk TH ${thLevel} tidak ditemukan.</p>`;
-            }
-            setupPagination(0, 1);
-            return;
+          if (baseType === "all") {
+            wadah.innerHTML = `<p style="text-align: center;">Tidak ada base yang ditemukan untuk Town Hall ${thLevel}.</p>`;
+          } else {
+            wadah.innerHTML = `<p style="text-align: center;">Base dengan tipe "${baseType}" untuk TH ${thLevel} tidak ditemukan.</p>`;
+          }
+          setupPagination(0, 1);
+          return;
         }
 
         const startIndex = (page - 1) * basesPerPage;
         const endIndex = page * basesPerPage;
         const paginatedBases = filteredBases.slice(startIndex, endIndex);
 
-        const isi = paginatedBases.map(ini => {
-            const authorName = ini.author ? ini.author.name : 'Tidak Diketahui';
-            const link = ini.link || '#';
-            const image = ini.image || 'placeholder.jpg';
+        const isi = paginatedBases
+          .map((ini, index) => {
+            const authorName = ini.author ? ini.author.name : "Tidak Diketahui";
+            const link = ini.link || "#";
+            const image = ini.image || "placeholder.jpg";
 
-            let typesHtml = '';
+            let typesHtml = "";
             if (ini.base_type && ini.base_type.length > 0) {
-                typesHtml = ini.base_type.map(type => `<span class="base-type-tag">${type}</span>`).join('');
+              typesHtml = ini.base_type
+                .map((type) => `<span class="base-type-tag">${type}</span>`)
+                .join("");
             } else {
-                typesHtml = '<span class="base-type-tag default">base gabut</span>';
+              typesHtml =
+                '<span class="base-type-tag default">base gabut</span>';
             }
 
-            return `
+            let cardHtml = `
             <div class="base">
                 <div class="gambar-container">
                     <img loading="lazy" decoding="async" src="image/${image}" alt="Layout Base Clash of Clans oleh ${authorName}">
@@ -398,7 +556,27 @@
                 </div>
             </div>
             `;
-        }).join("");
+
+            // Logika Iklan: Tampilkan setelah item ke-9 (index 8)
+            if (index === 8) {
+              cardHtml += `
+                <div class="base iklan-special">
+                    <img loading="lazy" src="iklan/iklan.jpg" alt="Subscribe @elplongor">
+                    <div class="iklan-overlay">
+                        <div class="iklan-content">
+                            <div class="iklan-text">
+                                <small>Jangan Lupa Subscribe</small>
+                                <h3>@elplongor</h3>
+                            </div>
+                            <a href="https://www.youtube.com/@elplongor" target="_blank" class="iklan-btn">SUBSCRIBE</a>
+                        </div>
+                    </div>
+                </div>`;
+            }
+
+            return cardHtml;
+          })
+          .join("");
 
         const sebelumIsi = `
             <h3 style="text-align: center; font-weight: 400; color: #6c757d; margin-bottom: 10px;">
@@ -408,102 +586,128 @@
 
         wadah.innerHTML = sebelumIsi + isi;
         setupPagination(filteredBases.length, page);
-    }
-    
-    function setupPagination(totalBases, page){
-        const paginationControls = document.getElementById('pagination-controls');
+      }
+
+      function setupPagination(totalBases, page) {
+        const paginationControls = document.getElementById(
+          "pagination-controls",
+        );
         const totalPages = Math.ceil(totalBases / basesPerPage);
-        
-        paginationControls.innerHTML = '';
-        if(totalPages <= 1) return;
 
-        const prevButton = document.createElement('button');
-        prevButton.textContent = '‹ Sebelumnya';
+        paginationControls.innerHTML = "";
+        if (totalPages <= 1) return;
+
+        const prevButton = document.createElement("button");
+        prevButton.textContent = "‹ Sebelumnya";
         prevButton.disabled = page === 1;
-        prevButton.addEventListener('click', () => {
-             displayBases(document.getElementById('base-type-select').value, page - 1);
+        prevButton.addEventListener("click", () => {
+          displayBases(
+            document.getElementById("base-type-select").value,
+            page - 1,
+          );
         });
 
-        const nextButton = document.createElement('button');
-        nextButton.textContent = 'Selanjutnya ›';
+        const nextButton = document.createElement("button");
+        nextButton.textContent = "Selanjutnya ›";
         nextButton.disabled = page === totalPages;
-        nextButton.addEventListener('click', () => {
-            displayBases(document.getElementById('base-type-select').value, page + 1);
+        nextButton.addEventListener("click", () => {
+          displayBases(
+            document.getElementById("base-type-select").value,
+            page + 1,
+          );
         });
-        
-        const pageInfo = document.createElement('span');
+
+        const pageInfo = document.createElement("span");
         pageInfo.textContent = `Halaman ${page} dari ${totalPages}`;
 
         paginationControls.appendChild(prevButton);
         paginationControls.appendChild(pageInfo);
         paginationControls.appendChild(nextButton);
-    }
+      }
 
-    function setupBaseTypeSelector() {
-        const selector = document.getElementById('base-type-select');
+      function setupBaseTypeSelector() {
+        const selector = document.getElementById("base-type-select");
         if (!selector) return;
-        
+
         selector.innerHTML = '<option value="all">Semua Tipe</option>';
-        baseTypesFromEjs.forEach(type => {
-            const option = document.createElement('option');
-            option.value = type;
-            option.textContent = type.charAt(0).toUpperCase() + type.slice(1);
-            selector.appendChild(option);
+        baseTypesFromEjs.forEach((type) => {
+          const option = document.createElement("option");
+          option.value = type;
+          option.textContent = type.charAt(0).toUpperCase() + type.slice(1);
+          selector.appendChild(option);
         });
 
-        selector.addEventListener('change', (e) => {
-            displayBases(e.target.value, 1);
+        selector.addEventListener("change", (e) => {
+          displayBases(e.target.value, 1);
         });
-    }
+      }
 
-    function setupThSelector() {
-        const selector = document.getElementById('th-level-select');
+      function setupThSelector() {
+        const selector = document.getElementById("th-level-select");
         if (!selector) return;
 
         for (let i = 1; i <= 18; i++) {
-            const option = document.createElement('option');
-            option.value = i;
-            option.textContent = `Town Hall ${i}`;
-            if (i === 17) { // Diubah ke 17
-                option.selected = true;
-            }
-            selector.appendChild(option);
+          const option = document.createElement("option");
+          option.value = i;
+          option.textContent = `Town Hall ${i}`;
+          if (i === 17) {
+            // Diubah ke 17
+            option.selected = true;
+          }
+          selector.appendChild(option);
         }
 
-        selector.addEventListener('change', (e) => {
-            loadData(e.target.value);
+        selector.addEventListener("change", (e) => {
+          loadData(e.target.value);
         });
-    }
+      }
 
-    function setupZoom() {
-        const modal = document.getElementById('zoomModal');
+      function setupZoom() {
+        const modal = document.getElementById("zoomModal");
         if (!modal) return;
 
-        const modalImg = document.getElementById('zoomedImg');
-        const closeBtn = document.querySelector('.close-zoom');
-        const baseanContainer = document.querySelector('.basean');
+        const modalImg = document.getElementById("zoomedImg");
+        const closeBtn = document.querySelector(".close-zoom");
+        const baseanContainer = document.querySelector(".basean");
 
         const openModal = (e) => {
-            if (e.target.tagName === 'IMG' && e.target.closest('.base')) {
-                modal.style.display = 'flex';
-                modalImg.src = e.target.src;
-            }
+          if (e.target.tagName === "IMG" && e.target.closest(".base")) {
+            modal.style.display = "flex";
+            modalImg.src = e.target.src;
+          }
         };
-        
+
         const closeModal = () => {
-            modal.style.display = 'none';
+          modal.style.display = "none";
+        };
+
+        baseanContainer.addEventListener("click", openModal);
+        closeBtn.addEventListener("click", closeModal);
+
+        modal.addEventListener("click", (e) => {
+          if (e.target === modal) {
+            closeModal();
+          }
+        });
+      }
+
+      function setupTheme() {
+        const themeBtn = document.getElementById("theme-toggle");
+        const body = document.body;
+
+        // Cek preferensi tersimpan
+        if (localStorage.getItem("theme") === "dark") {
+          body.classList.add("dark-mode");
+          themeBtn.textContent = "☀️";
         }
 
-        baseanContainer.addEventListener('click', openModal);
-        closeBtn.addEventListener('click', closeModal);
-
-        modal.addEventListener('click', (e) => {
-            if (e.target === modal) {
-                closeModal();
-            }
+        themeBtn.addEventListener("click", () => {
+          body.classList.toggle("dark-mode");
+          const isDark = body.classList.contains("dark-mode");
+          themeBtn.textContent = isDark ? "☀️" : "🌙";
+          localStorage.setItem("theme", isDark ? "dark" : "light");
         });
-    }
-
-</script>
-</body>
+      }
+    </script>
+  </body>
 </html>
