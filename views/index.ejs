@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Halaman Input Base</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --primary: #6366f1;
+        --primary-dark: #4f46e5;
+        --bg-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        --card-bg: #ffffff;
+        --border: #e5e7eb;
+        --text: #1f2937;
+        --text-muted: #6b7280;
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family: "Poppins", sans-serif;
+        background: var(--bg-gradient);
+        color: var(--text);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        padding: 15px;
+      }
+      .container {
+        background-color: var(--card-bg);
+        padding: 2rem;
+        border-radius: 24px;
+        box-shadow:
+          0 20px 25px -5px rgba(0, 0, 0, 0.1),
+          0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        width: 100%;
+        max-width: 640px;
+      }
+      h1 {
+        text-align: center;
+        margin-bottom: 0.5rem;
+        font-weight: 700;
+        color: #111827;
+        font-size: 1.75rem;
+      }
+      p.subtitle {
+        text-align: center;
+        color: var(--text-muted);
+        margin-bottom: 2rem;
+        font-size: 0.9rem;
+      }
+      .group {
+        margin-bottom: 1.5rem;
+      }
+      label {
+        display: block;
+        margin-bottom: 0.4rem;
+        font-weight: 500;
+        font-size: 0.9rem;
+        color: #374151;
+      }
+      input {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        font-family: inherit;
+        font-size: 0.95rem;
+        transition: all 0.3s ease;
+        background-color: #f9fafb;
+      }
+      input:focus {
+        outline: none;
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        background-color: #fff;
+      }
+
+      /* Custom File Upload Area */
+      .upload-area {
+        border: 2px dashed var(--border);
+        border-radius: 12px;
+        padding: 2rem 1rem;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        background-color: #f9fafb;
+        position: relative;
+      }
+      .upload-area:hover,
+      .upload-area.dragover {
+        border-color: var(--primary);
+        background-color: #eef2ff;
+      }
+      .upload-area input[type="file"] {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        opacity: 0;
+        cursor: pointer;
+      }
+      .upload-icon {
+        font-size: 2rem;
+        color: var(--text-muted);
+        margin-bottom: 0.5rem;
+      }
+      .upload-text {
+        color: var(--text-muted);
+        font-size: 0.9rem;
+      }
+      .upload-text span {
+        color: var(--primary);
+        font-weight: 600;
+      }
+      #previewContainer {
+        margin-top: 1rem;
+        display: none;
+        text-align: center;
+      }
+      #previewImage {
+        max-width: 100%;
+        max-height: 200px;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      }
+
+      /* Checkbox Styles */
+      .checkbox-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 10px;
+        margin-top: 0.5rem;
+      }
+      .checkbox-wrapper {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        background-color: #f9fafb;
+        padding: 10px 12px;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+      .checkbox-wrapper:has(input:checked),
+      .checkbox-wrapper:hover {
+          background-color: #eef2ff;
+          border-color: var(--primary);
+      }
+      .checkbox-wrapper input[type="checkbox"] {
+        width: 1.1em;
+        height: 1.1em;
+        accent-color: var(--primary);
+        flex-shrink: 0;
+      }
+      .checkbox-wrapper label {
+        margin-bottom: 0;
+        font-weight: 500;
+        color: var(--text);
+        cursor: pointer;
+      }
+
+      fieldset {
+        margin-bottom: 1.5rem;
+        padding: 1.5rem;
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        background: #f9fafb;
+      }
+      legend {
+        padding: 0 10px;
+        font-weight: 600;
+        color: var(--primary);
+        font-size: 0.9rem;
+      }
+      button {
+        width: 100%;
+        padding: 14px;
+        background-color: var(--primary);
+        color: #fff;
+        border: none;
+        border-radius: 10px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition:
+          transform 0.1s,
+          background-color 0.2s;
+        margin-top: 1rem;
+        box-shadow: 0 4px 6px -1px rgba(99, 102, 241, 0.4);
+      }
+      button:hover {
+        background-color: var(--primary-dark);
+      }
+      button:active {
+        transform: scale(0.98);
+      }
+      button:disabled {
+        background-color: var(--text-muted);
+        cursor: not-allowed;
+        transform: none;
+      }
+
+      /* Feedback Styles */
+      #feedback {
+        text-align: center;
+        animation: fadeIn 0.5s ease;
+      }
+      .success-icon {
+        width: 60px;
+        height: 60px;
+        background: #d1fae5;
+        color: #059669;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1rem;
+        font-size: 2rem;
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+    </style>
+  </head>
+  
+  <body>
+    <div class="container">
+      <h1>Upload Base COC</h1>
+      <p class="subtitle">Bagikan layout base terbaikmu kepada dunia</p>
+
+      <div id="feedback" style="display: none; text-align: center">
+        <div class="success-icon">✓</div>
+        <h2
+          id="feedbackMessage"
+          style="margin-bottom: 0.5rem; color: #111827; font-size: 1.5rem"
+        ></h2>
+        <p
+          id="feedbackDetail"
+          style="color: var(--text-muted); margin-bottom: 1.5rem"
+        ></p>
+        <button id="postAgainBtn" type="button">Upload Base Lain</button>
+      </div>
+
+      <form
+        id="uploadForm"
+        action="/"
+        method="POST"
+        enctype="multipart/form-data"
+      >
+        <div class="group">
+          <label for="link">Link Base</label>
+          <input
+            type="url"
+            name="link"
+            id="link"
+            placeholder="https://link.clashofclans.com/..."
+            required
+          />
+        </div>
+
+        <div class="group">
+          <label>Screenshot Base</label>
+          <div class="upload-area" id="dropZone">
+            <div class="upload-icon">📁</div>
+            <div class="upload-text">
+              <span>Klik untuk upload</span> atau drag & drop
+            </div>
+            <input
+              type="file"
+              name="image"
+              id="image"
+              accept="image/*"
+              required
+            />
+
+            <div id="previewContainer">
+              <img id="previewImage" src="" alt="Preview" />
+              <p
+                style="
+                  font-size: 0.8rem;
+                  color: var(--text-muted);
+                  margin-top: 0.5rem;
+                "
+              >
+                Klik untuk ganti gambar
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="group">
+          <label for="th">Town Hall (TH)</label>
+          <input type="number" name="th" id="th" placeholder="5" required />
+        </div>
+
+        <div class="group">
+          <label>Tipe Base (bisa pilih lebih dari satu)</label>
+          <div class="checkbox-container">
+            <div class="checkbox-wrapper">
+              <input type="checkbox" id="type-looting" name="base_type" value="looting base">
+              <label for="type-looting">Looting Base</label>
+            </div>
+            <div class="checkbox-wrapper">
+              <input type="checkbox" id="type-war" name="base_type" value="war base">
+              <label for="type-war">War Base</label>
+            </div>
+            <div class="checkbox-wrapper">
+              <input type="checkbox" id="type-cwl" name="base_type" value="cwl base">
+              <label for="type-cwl">CWL Base</label>
+            </div>
+            <div class="checkbox-wrapper">
+              <input type="checkbox" id="type-troll" name="base_type" value="troll base">
+              <label for="type-troll">Troll Base</label>
+            </div>
+            <div class="checkbox-wrapper">
+              <input type="checkbox" id="type-circle" name="base_type" value="circle base">
+              <label for="type-circle">Circle Base</label>
+            </div>
+            <div class="checkbox-wrapper">
+              <input type="checkbox" id="type-asymmetric" name="base_type" value="asymetris base">
+              <label for="type-asymmetric">Asymetris Base</label>
+            </div>
+            <div class="checkbox-wrapper">
+              <input type="checkbox" id="type-cool" name="base_type" value="cool base">
+              <label for="type-cool">Cool Base</label>
+            </div>
+            <div class="checkbox-wrapper">
+              <input type="checkbox" id="type-hybrid" name="base_type" value="hybrid base">
+              <label for="type-hybrid">Hybrid Base</label>
+            </div>
+          </div>
+        </div>
+
+        <fieldset>
+          <legend>Author</legend>
+          <div class="group">
+            <label for="authorName">Nama</label>
+            <input
+              type="text"
+              name="author[name]"
+              id="authorName"
+              placeholder="lamur"
+            />
+          </div>
+          <div class="group">
+            <label for="authorTag">Tag Pemain</label>
+            <input
+              type="text"
+              name="author[tag]"
+              id="authorTag"
+              placeholder="#ffafd0"
+            />
+          </div>
+        </fieldset>
+        <button type="submit">🚀 Upload Base</button>
+      </form>
+    </div>
+
+    <script>
+      const form = document.getElementById("uploadForm");
+      const feedbackDiv = document.getElementById("feedback");
+      const feedbackMessage = document.getElementById("feedbackMessage");
+      const feedbackDetail = document.getElementById("feedbackDetail");
+      const postAgainBtn = document.getElementById("postAgainBtn");
+      const title = document.querySelector("h1");
+      const subtitle = document.querySelector(".subtitle");
+
+      // Drag & Drop + Preview Logic
+      const dropZone = document.getElementById("dropZone");
+      const imageInput = document.getElementById("image");
+      const previewContainer = document.getElementById("previewContainer");
+      const previewImage = document.getElementById("previewImage");
+      const uploadText = document.querySelector(".upload-text");
+      const uploadIcon = document.querySelector(".upload-icon");
+
+      // Highlight drop zone
+      ["dragenter", "dragover"].forEach((eventName) => {
+        dropZone.addEventListener(
+          eventName,
+          (e) => {
+            e.preventDefault();
+            dropZone.classList.add("dragover");
+          },
+          false,
+        );
+      });
+
+      ["dragleave", "drop"].forEach((eventName) => {
+        dropZone.addEventListener(
+          eventName,
+          (e) => {
+            e.preventDefault();
+            dropZone.classList.remove("dragover");
+          },
+          false,
+        );
+      });
+
+      // Handle file selection
+      imageInput.addEventListener("change", function () {
+        handleFiles(this.files);
+      });
+
+      dropZone.addEventListener("drop", function (e) {
+        const dt = e.dataTransfer;
+        const files = dt.files;
+        imageInput.files = files; // Assign dropped files to input
+        handleFiles(files);
+      });
+
+      function handleFiles(files) {
+        if (files.length > 0) {
+          const file = files[0];
+          if (file.type.startsWith("image/")) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+              previewImage.src = e.target.result;
+              previewContainer.style.display = "block";
+              uploadText.style.display = "none";
+              uploadIcon.style.display = "none";
+            };
+            reader.readAsDataURL(file);
+          }
+        }
+      }
+
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const submitBtn = form.querySelector('button[type="submit"]');
+        const originalBtnText = submitBtn.innerText;
+
+        // Disable button loading state
+        submitBtn.disabled = true;
+        submitBtn.innerText = "⏳ Sedang Mengirim...";
+
+        try {
+          const formData = new FormData(form);
+          const response = await fetch("/", {
+            method: "POST",
+            body: formData,
+          });
+
+          // Cek apakah response berupa JSON
+          const contentType = response.headers.get("content-type");
+          if (contentType && contentType.includes("application/json")) {
+            const result = await response.json();
+            if (response.ok) {
+              feedbackMessage.innerText = "Upload Berhasil!";
+              feedbackDetail.innerText = `Base TH ${result.data.th} berhasil disimpan dengan ID ${result.data.id}`;
+              document.querySelector(".success-icon").innerHTML = "✓";
+              document.querySelector(".success-icon").style.background =
+                "#d1fae5";
+              document.querySelector(".success-icon").style.color = "#059669";
+            } else {
+              throw new Error(result.message);
+            }
+          } else {
+            throw new Error("Gagal: Terjadi kesalahan server");
+          }
+        } catch (err) {
+          feedbackMessage.innerText = "Gagal Upload";
+          feedbackDetail.innerText = err.message;
+          document.querySelector(".success-icon").innerHTML = "✕";
+          document.querySelector(".success-icon").style.background = "#fee2e2";
+          document.querySelector(".success-icon").style.color = "#dc2626";
+        } finally {
+          // Tampilkan feedback dan sembunyikan form
+          form.style.display = "none";
+          title.style.display = "none";
+          subtitle.style.display = "none";
+          feedbackDiv.style.display = "block";
+
+          // Reset tombol submit
+          submitBtn.disabled = false;
+          submitBtn.innerText = originalBtnText;
+        }
+      });
+
+      postAgainBtn.addEventListener("click", () => {
+        form.reset();
+        // Reset preview
+        previewContainer.style.display = "none";
+        uploadText.style.display = "block";
+        uploadIcon.style.display = "block";
+
+        feedbackDiv.style.display = "none";
+        form.style.display = "block";
+        title.style.display = "block";
+        subtitle.style.display = "block";
+      });
+    </script>
+  </body>
+</html>
+
